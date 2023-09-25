@@ -97,7 +97,7 @@ export class Downloader {
 		await Promise.all(tasks);
 	}
 
-	async download_m3u8(
+	protected async download_m3u8(
 		m3u8: string,
 		base: string,
 		results: Segment[],
