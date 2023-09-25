@@ -1,9 +1,17 @@
+import fetch from "cross-fetch";
 import { expect, it } from "vitest";
 import { Downloader } from "../src";
 
 it(
 	"can download",
-	async () => {
+	async (ctx) => {
+		// Bahamut only allows Taiwan to access the videos.
+		const geo = await fetch("http://ip-api.com/json/").then((res) => res.json());
+		if (geo.countryCode !== "TW") {
+			ctx.skip();
+			return;
+		}
+
 		const downloader = new Downloader();
 		await downloader.init();
 
