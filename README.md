@@ -34,7 +34,6 @@ main();
 
 async function main() {
     const downloader = new Downloader();
-    await downloader.init();
 
     const download = downloader.download(SN);
     const meta = await download.meta;

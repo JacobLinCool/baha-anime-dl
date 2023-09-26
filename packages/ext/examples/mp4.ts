@@ -24,7 +24,6 @@ async function main() {
 	};
 
 	const downloader = new Downloader(config);
-	await downloader.init();
 
 	const download = downloader.download(34886);
 	const merged = await merge(download);

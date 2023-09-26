@@ -13,12 +13,14 @@ export class Downloader {
 	protected log: debug.Debugger;
 	protected ctx: DownloaderContext;
 	protected pool: Promise<void>[];
+	protected initialized: Promise<boolean>;
 
 	constructor(config: DownloaderConfig = default_config()) {
 		this.config = config;
 		this.log = log.extend(config.id);
 		this.ctx = {};
 		this.pool = Array.from({ length: config.concurrency }, () => Promise.resolve());
+		this.initialized = Promise.resolve(false);
 	}
 
 	/**
@@ -27,6 +29,14 @@ export class Downloader {
 	 * @throws If the device ID cannot be retrieved.
 	 */
 	public async init(): Promise<void> {
+		const initialized = await this.initialized;
+		if (!initialized) {
+			this.initialized = this._init();
+			await this.initialized;
+		}
+	}
+
+	protected async _init(): Promise<true> {
 		await this.get_device();
 		if (!this.ctx.device) {
 			throw new Error("Cannot get device id");
@@ -34,10 +44,12 @@ export class Downloader {
 		this.log("device", this.ctx.device);
 
 		this.log("init done");
+		return true;
 	}
 
 	/**
 	 * Downloads the media with the given serial number or ID.
+	 * The `.init` method will be called internally if it has not been called before.
 	 * @param sn The serial number or ID of the media to download.
 	 * @returns An object containing promises for the media metadata, playlist, and segments.
 	 */
@@ -69,6 +81,8 @@ export class Downloader {
 		segments: Segment[],
 	): Promise<void> {
 		sn = sn.toString();
+
+		await this.init();
 
 		const token = await this.get_token(sn);
 		if (token.time !== 1) {
@@ -132,7 +146,11 @@ export class Downloader {
 		return results.map((segment) => segment.content);
 	}
 
-	async decrypt(buffer: ArrayBuffer, key: ArrayBuffer, iv: Uint32Array): Promise<ArrayBuffer> {
+	protected async decrypt(
+		buffer: ArrayBuffer,
+		key: ArrayBuffer,
+		iv: Uint32Array,
+	): Promise<ArrayBuffer> {
 		const decryption_key = await this.config.subtle.importKey("raw", key, "AES-CBC", false, [
 			"encrypt",
 			"decrypt",
