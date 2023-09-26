@@ -51,3 +51,12 @@ async function main() {
     }
 }
 ```
+
+## Why I need this?
+
+Well, I use it to analyze the audio of the anime, and detect the opening and ending songs.
+
+Some of ideas:
+
+- Audio analysis
+- Train an video upscaler (I think this requires some works for authorization)
