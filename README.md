@@ -1,22 +1,25 @@
 # Bahamut Anime Downloader
 
-This tool is used to download **low quality** Anime from Bahamut.
+Bahamut Anime Downloader is a library designed to fetch **low-quality** anime episodes from Bahamut Anime.
 
-> It serves as a component of [baha-anime-skip](https://github.com/JacobLinCool/baha-anime-skip), which detects the opening and ending songs and add `skip` button to Bahamut Anime.
+> This package is used by [baha-anime-skip](https://github.com/JacobLinCool/baha-anime-skip) internally, which adds "skip" buttons for anime openings and endings on the Bahamut Anime.
 
-## Features
+## Key Features
 
-By giving the `sn` of the anime, this tool can do the following things:
+Simply provide the `sn` (serial number) of the desired anime, and the tool will seamlessly:
 
-- **Download** the meta-m3u8 file, and **parse** it
-- **Download** the m3u8 playlist, and **parse** it
-- **Download** the ts files, and **decrypt** them
+- **Fetch and Parse**: Download the meta-m3u8 and m3u8 playlist files, then parse them for you.
+- **Download and Decrypt**: Acquire the TS (Transport Stream) files and automatically decrypt them.
 
-It does **not** merge the ts files into a single mp4 file, if you want to do so, you can use the `merge` function provided by the `baha-anime-dl-ext` package.
+> **Note**: This tool stops short of merging the downloaded TS files into a single MP4 file. If you require this functionality, you can easily extend it with the `merge` function available in the `baha-anime-dl-ext` package.
 
-It is platform independent, you can pass any custom `fetch` and `subtle` implementation to it.
+## Platform Independence
 
-## Example
+The package is platform-agnostic. You can plug in any custom implementations for `fetch` and `subtle` as needed.
+
+## Usage Examples
+
+### Basic Download Example
 
 ```ts
 import fs from "node:fs";
@@ -24,8 +27,8 @@ import path from "node:path";
 import { Downloader } from "baha-anime-dl";
 
 const SN = 34886;
-
 const dir = "tmp";
+
 if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
 }
@@ -34,8 +37,8 @@ main();
 
 async function main() {
     const downloader = new Downloader();
-
     const download = downloader.download(SN);
+
     const meta = await download.meta;
     fs.writeFileSync(path.join(dir, "meta.m3u8"), meta);
 
@@ -51,7 +54,7 @@ async function main() {
 }
 ```
 
-### Use with `merge` from `baha-anime-dl-ext`
+### Integration with `baha-anime-dl-ext` for Merging
 
 ```ts
 import fs from "node:fs";
@@ -64,18 +67,18 @@ main();
 
 async function main() {
     const downloader = new Downloader();
-
     const download = downloader.download(SN);
+
     const mp4 = await merge(download);
     fs.writeFileSync(`${SN}.mp4`, mp4);
 }
 ```
 
-## Why I need this?
+## Why Would You Need This?
 
-Well, I use it to analyze the audio of the anime, and detect the opening and ending songs.
+My use case is for audio analysis, particularly to identify opening and ending songs in anime episodes. Here are some additional ideas:
 
-Some of ideas:
+- Conducting audio analysis for various purposes.
+- Training a video upscaler model, though this could require additional authorization steps.
 
-- Audio analysis
-- Train an video upscaler (I think this requires some works for authorization)
+Feel free to dive in and explore the potential of Bahamut Anime Downloader!
