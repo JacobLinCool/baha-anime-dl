@@ -12,7 +12,7 @@ By giving the `sn` of the anime, this tool can do the following things:
 - **Download** the m3u8 playlist, and **parse** it
 - **Download** the ts files, and **decrypt** them
 
-It does **not** merge the ts files into a single mp4 file, if you want to do so, you can use [ffmpeg](https://ffmpeg.org/).
+It does **not** merge the ts files into a single mp4 file, if you want to do so, you can use the `merge` function provided by the `baha-anime-dl-ext` package.
 
 It is platform independent, you can pass any custom `fetch` and `subtle` implementation to it.
 
@@ -48,6 +48,26 @@ async function main() {
             fs.writeFileSync(path.join(dir, segment.filename), Buffer.from(content));
         });
     }
+}
+```
+
+### Use with `merge` from `baha-anime-dl-ext`
+
+```ts
+import fs from "node:fs";
+import { Downloader } from "baha-anime-dl";
+import { merge } from "baha-anime-dl-ext";
+
+const SN = 34886;
+
+main();
+
+async function main() {
+    const downloader = new Downloader();
+
+    const download = downloader.download(SN);
+    const mp4 = await merge(download);
+    fs.writeFileSync(`${SN}.mp4`, mp4);
 }
 ```
 
