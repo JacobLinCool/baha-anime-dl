@@ -198,42 +198,43 @@ export class Downloader {
 	}
 
 	protected async fetch(...args: Parameters<typeof globalThis.fetch>): Promise<Response> {
-		let unlock: () => void;
-		const lock = new Promise<void>((resolve) => {
-			unlock = resolve;
-		});
+		for (let i = 1; i <= this.config.retries; i++) {
+			let unlock: () => void;
+			const lock = new Promise<void>((resolve) => {
+				unlock = resolve;
+			});
 
-		this.pool.push(lock);
-		await this.pool.shift();
+			this.pool.push(lock);
+			await this.pool.shift();
 
-		this.log("fetch", ...args);
-		try {
-			for (let i = 0; i < this.config.retries; i++) {
-				try {
-					const res = await this.config.fetcher(args[0], {
-						...args[1],
-						headers: {
-							"User-Agent": `Mozilla/5.0 Baha Anime Downloader/${version}`,
-							origin: "https://ani.gamer.com.tw",
-							...args[1]?.headers,
-						},
-					});
-					if (res.ok) {
-						return res;
-					}
-				} catch (err) {
-					this.log("fetch error", err);
+			try {
+				this.log("fetch", ...args);
+				const res = await this.config.fetcher(args[0], {
+					...args[1],
+					headers: {
+						"User-Agent": `Mozilla/5.0 Baha Anime Downloader/${version}`,
+						origin: "https://ani.gamer.com.tw",
+						...args[1]?.headers,
+					},
+				});
+				if (res.ok) {
+					return res;
 				}
+			} catch (err) {
+				this.log("fetch error", err);
+			} finally {
+				// @ts-expect-error unlock is set
+				unlock();
 			}
 
-			throw new Error(
-				`Cannot fetch ${args[0]} after ${this.config.retries} retries with ${JSON.stringify(
-					args[1],
-				)}`,
-			);
-		} finally {
-			// @ts-expect-error unlock is set
-			unlock();
+			// exponential backoff (2^i - 1 seconds)
+			await new Promise((r) => setTimeout(r, 1000 * (Math.pow(2, i) - 1)));
 		}
+
+		throw new Error(
+			`Cannot fetch ${args[0]} after ${this.config.retries} retries with ${JSON.stringify(
+				args[1],
+			)}`,
+		);
 	}
 }
