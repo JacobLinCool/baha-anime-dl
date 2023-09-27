@@ -1,7 +1,7 @@
 {
 	"name": "baha-anime-dl",
 	"description": "This tool is used to download low quality Anime from Bahamut.",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"author": "JacobLinCool <jacoblincool@gmail.com> (https://jacoblin.cool)",
 	"license": "AGPL-3.0",
 	"keywords": [],
