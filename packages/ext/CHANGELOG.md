@@ -1,5 +1,12 @@
 # baha-anime-dl
 
+## 0.0.3
+
+### Patch Changes
+
+-   Updated dependencies [[`623d993`](https://github.com/JacobLinCool/baha-anime-dl/commit/623d993532b6ee72ca52a59bb0e3d42a531a4ee2)]:
+    -   baha-anime-dl@0.0.3
+
 ## 0.0.2
 
 ### Patch Changes
