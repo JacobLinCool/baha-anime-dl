@@ -3,7 +3,7 @@ import type { DownloaderConfig } from "./config";
 import { default_config } from "./config";
 import { log } from "./log";
 import { parse } from "./parse";
-import type { Download, DownloaderContext, Segment, Token } from "./types";
+import type { Download, DownloaderContext, ErrorToken, Segment, Token } from "./types";
 
 /**
  * A downloader for Bahamut Anime videos.
@@ -56,16 +56,24 @@ export class Downloader {
 	public download(sn: string | number): Download {
 		let meta_resolver: (c: string) => void;
 		let playlist_resolver: (c: string) => void;
-		const meta = new Promise<string>((resolve) => {
+		let meta_rejecter: (e: Error) => void;
+		let playlist_rejecter: (e: Error) => void;
+		const meta = new Promise<string>((resolve, reject) => {
 			meta_resolver = resolve;
+			meta_rejecter = reject;
 		});
-		const playlist = new Promise<string>((resolve) => {
+		const playlist = new Promise<string>((resolve, reject) => {
 			playlist_resolver = resolve;
+			playlist_rejecter = reject;
 		});
 		const segments: Segment[] = [];
 
 		// @ts-expect-error resolver is set
-		this._download(sn, meta_resolver, playlist_resolver, segments);
+		this._download(sn, meta_resolver, playlist_resolver, segments).catch((err) => {
+			this.log("download error", err);
+			meta_rejecter(err);
+			playlist_rejecter(err);
+		});
 
 		return {
 			meta,
@@ -178,8 +186,12 @@ export class Downloader {
 		const res = await this.fetch(
 			`https://ani.gamer.com.tw/ajax/token.php?adID=${undefined}&sn=${sn}&device=${this.ctx.device}`,
 		);
-		const token: Token = await res.json();
+		const token: Token | ErrorToken = await res.json();
 		this.log("token", token);
+
+		if ("error" in token) {
+			throw new Error(`Cannot get token for ${sn}: ${token.error.message}`);
+		}
 
 		return token;
 	}

@@ -8,6 +8,15 @@ export interface Token {
 	promote: unknown[];
 }
 
+export interface ErrorToken {
+	error: {
+		code: number;
+		message: string;
+		status: string;
+		details: unknown[];
+	};
+}
+
 export interface Segment {
 	/** The filename of the ts segment */
 	filename: string;
