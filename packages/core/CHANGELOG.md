@@ -1,5 +1,11 @@
 # baha-anime-dl
 
+## 0.0.4
+
+### Patch Changes
+
+-   [`0d7522f`](https://github.com/JacobLinCool/baha-anime-dl/commit/0d7522f8912a34127391fc2d50ce04485c9a3907) Thanks [@JacobLinCool](https://github.com/JacobLinCool)! - `.meta` and `.playlist` will now be rejected if login is required
+
 ## 0.0.3
 
 ### Patch Changes
