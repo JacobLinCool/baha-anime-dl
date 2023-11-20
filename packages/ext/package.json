@@ -29,7 +29,7 @@
 		"@types/fluent-ffmpeg": "^2.1.22",
 		"@types/tough-cookie": "^4.0.3",
 		"baha-anime-dl": "workspace:*",
-		"tsup": "^7.2.0",
+		"tsup": "^8.0.0",
 		"typedoc": "^0.25.1",
 		"typescript": "^5.2.2"
 	},
