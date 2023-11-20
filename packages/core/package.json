@@ -24,7 +24,7 @@
 	"devDependencies": {
 		"@types/debug": "^4.1.9",
 		"@types/tough-cookie": "^4.0.3",
-		"tsup": "^7.2.0",
+		"tsup": "^8.0.0",
 		"typedoc": "^0.25.1",
 		"typescript": "^5.2.2"
 	},
