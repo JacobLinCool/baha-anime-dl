@@ -1,0 +1,35 @@
+{
+	"name": "baha-anime-dl-cli",
+	"description": "This tool is used to download low quality Anime from Bahamut.",
+	"version": "0.0.0",
+	"author": "JacobLinCool <jacoblincool@gmail.com> (https://jacoblin.cool)",
+	"license": "AGPL-3.0",
+	"keywords": [],
+	"bin": {
+		"baha-anime-dl": "dist/index.js"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup"
+	},
+	"dependencies": {
+		"baha-anime-dl": "workspace:*",
+		"baha-anime-dl-ext": "workspace:*",
+		"yargs": "^17.7.2"
+	},
+	"devDependencies": {
+		"@types/yargs": "^17.0.32",
+		"tsup": "^7.2.0",
+		"typescript": "^5.2.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/JacobLinCool/baha-anime-dl.git"
+	},
+	"bugs": {
+		"url": "https://github.com/JacobLinCool/baha-anime-dl/issues"
+	},
+	"homepage": "https://jacoblincool.github.io/baha-anime-dl"
+}
