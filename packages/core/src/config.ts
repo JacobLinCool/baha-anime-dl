@@ -1,3 +1,5 @@
+import type { fetch } from "@fetch-impl/fetcher";
+import type { webcrypto } from "node:crypto";
 import { subtle } from "node:crypto";
 import { build } from "./fetcher";
 
@@ -13,7 +15,7 @@ export interface DownloaderConfig {
 	 * The fetch function to use for downloading files.
 	 * It requires to be able to handle cookie states.
 	 */
-	fetcher: typeof globalThis.fetch;
+	fetcher: typeof fetch;
 	/**
 	 * The maximum number of concurrent downloads.
 	 */
@@ -26,7 +28,7 @@ export interface DownloaderConfig {
 	/**
 	 * The webcrypto.SubtleCrypto implementation to use for decrypting segments.
 	 */
-	subtle: SubtleCrypto;
+	subtle: webcrypto.SubtleCrypto;
 }
 
 export const default_config = () =>

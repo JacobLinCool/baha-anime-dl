@@ -1,4 +1,4 @@
-import fetch from "cross-fetch";
+import fetch from "@fetch-impl/fetcher";
 import { expect, it } from "vitest";
 import { Downloader } from "../src";
 

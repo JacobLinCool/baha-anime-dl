@@ -1,3 +1,4 @@
+import type { fetch } from "@fetch-impl/fetcher";
 import { version } from "../package.json";
 import type { DownloaderConfig } from "./config";
 import { default_config } from "./config";
@@ -209,7 +210,7 @@ export class Downloader {
 		return [json.src, text];
 	}
 
-	protected async fetch(...args: Parameters<typeof globalThis.fetch>): Promise<Response> {
+	protected async fetch(...args: Parameters<typeof fetch>) {
 		for (let i = 1; i <= this.config.retries; i++) {
 			let unlock: () => void;
 			const lock = new Promise<void>((resolve) => {

@@ -1,5 +1,6 @@
 import type { Download } from "baha-anime-dl";
 import ffmpeg from "fluent-ffmpeg";
+import { spawn } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -49,9 +50,18 @@ export async function merge(download: Download): Promise<ArrayBuffer> {
 	log(`ffmpeg command: ${command._getArguments().join(" ")}`);
 
 	await new Promise<void>((resolve, reject) => {
-		command.on("end", resolve);
-		command.on("error", reject);
-		command.run();
+		const args = command._getArguments();
+		const ff = spawn("ffmpeg", args);
+		ff.stdout.on("data", (data) => log(data.toString().trim()));
+		ff.stderr.on("data", (data) => log(data.toString().trim()));
+		ff.on("error", reject);
+		ff.on("exit", (code) => {
+			if (code === 0) {
+				resolve();
+			} else {
+				reject(new Error(`FFmpeg process exited with code ${code}`));
+			}
+		});
 	});
 	log("merge finished");
 

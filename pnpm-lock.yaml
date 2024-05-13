@@ -47,11 +47,42 @@ importers:
                 specifier: ^0.34.5
                 version: 0.34.5
 
+    packages/cli:
+        dependencies:
+            baha-anime-dl:
+                specifier: workspace:*
+                version: link:../core
+            baha-anime-dl-ext:
+                specifier: workspace:*
+                version: link:../ext
+            yargs:
+                specifier: ^17.7.2
+                version: 17.7.2
+        devDependencies:
+            "@types/yargs":
+                specifier: ^17.0.32
+                version: 17.0.32
+            tsup:
+                specifier: ^7.2.0
+                version: 7.2.0(typescript@5.2.2)
+            typescript:
+                specifier: ^5.2.2
+                version: 5.2.2
+
     packages/core:
         dependencies:
-            cross-fetch:
-                specifier: ^4.0.0
-                version: 4.0.0
+            "@fetch-impl/cross-fetch":
+                specifier: ^1.0.0
+                version: 1.0.0(@fetch-impl/fetcher@1.0.0)(cross-fetch@4.0.0)
+            "@fetch-impl/fetcher":
+                specifier: ^1.0.0
+                version: 1.0.0
+            "@types/debug":
+                specifier: ^4.1.9
+                version: 4.1.9
+            "@types/tough-cookie":
+                specifier: ^4.0.3
+                version: 4.0.3
             debug:
                 specifier: ^4.3.4
                 version: 4.3.4
@@ -65,12 +96,6 @@ importers:
                 specifier: ^4.1.3
                 version: 4.1.3
         devDependencies:
-            "@types/debug":
-                specifier: ^4.1.9
-                version: 4.1.9
-            "@types/tough-cookie":
-                specifier: ^4.0.3
-                version: 4.0.3
             tsup:
                 specifier: ^7.2.0
                 version: 7.2.0(typescript@5.2.2)
@@ -685,6 +710,26 @@ packages:
         dev: true
         optional: true
 
+    /@fetch-impl/cross-fetch@1.0.0(@fetch-impl/fetcher@1.0.0)(cross-fetch@4.0.0):
+        resolution:
+            {
+                integrity: sha512-vNvwtCQ7yruvpYnp1i/4paVi/icrGYx9O4eHNDYorjTAFg78bhitO0l39opJSVfsTKqyWqj3+2+YenoGhZOCJA==,
+            }
+        peerDependencies:
+            "@fetch-impl/fetcher": ^1.0.0
+            cross-fetch: "*"
+        dependencies:
+            "@fetch-impl/fetcher": 1.0.0
+            cross-fetch: 4.0.0
+        dev: false
+
+    /@fetch-impl/fetcher@1.0.0:
+        resolution:
+            {
+                integrity: sha512-UPUN9Yfjnk513Vc08iNW8/9L1nSwQMsTx6nOvmjPNfU2Rtbew/2KgAbQDPuoL6PrNgEmEmmyeM29BkcVBpt3gQ==,
+            }
+        dev: false
+
     /@jest/schemas@29.6.3:
         resolution:
             {
@@ -788,7 +833,6 @@ packages:
             }
         dependencies:
             "@types/ms": 0.7.31
-        dev: true
 
     /@types/fluent-ffmpeg@2.1.22:
         resolution:
@@ -820,7 +864,6 @@ packages:
             {
                 integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==,
             }
-        dev: true
 
     /@types/node@12.20.55:
         resolution:
@@ -855,6 +898,21 @@ packages:
             {
                 integrity: sha512-THo502dA5PzG/sfQH+42Lw3fvmYkceefOspdCwpHRul8ik2Jv1K8I5OZz1AT3/rs46kwgMCe9bSBmDLYkkOMGg==,
             }
+
+    /@types/yargs-parser@21.0.3:
+        resolution:
+            {
+                integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==,
+            }
+        dev: true
+
+    /@types/yargs@17.0.32:
+        resolution:
+            {
+                integrity: sha512-xQ67Yc/laOG5uMfX/093MRlGGCIBzZMarVa+gfNKJxWAIgykYpVGkBdbqEzGDDfCrVUj6Hiff4mTZ5BA6TmAog==,
+            }
+        dependencies:
+            "@types/yargs-parser": 21.0.3
         dev: true
 
     /@videojs/vhs-utils@3.0.5:
@@ -1002,7 +1060,6 @@ packages:
                 integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==,
             }
         engines: { node: ">=8" }
-        dev: true
 
     /ansi-regex@6.0.1:
         resolution:
@@ -1037,7 +1094,6 @@ packages:
         engines: { node: ">=8" }
         dependencies:
             color-convert: 2.0.1
-        dev: true
 
     /ansi-styles@5.2.0:
         resolution:
@@ -1468,7 +1524,6 @@ packages:
             string-width: 4.2.3
             strip-ansi: 6.0.1
             wrap-ansi: 7.0.0
-        dev: true
 
     /clone@1.0.4:
         resolution:
@@ -1495,7 +1550,6 @@ packages:
         engines: { node: ">=7.0.0" }
         dependencies:
             color-name: 1.1.4
-        dev: true
 
     /color-name@1.1.3:
         resolution:
@@ -1509,7 +1563,6 @@ packages:
             {
                 integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==,
             }
-        dev: true
 
     /colorette@2.0.20:
         resolution:
@@ -1790,7 +1843,6 @@ packages:
             {
                 integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==,
             }
-        dev: true
 
     /emoji-regex@9.2.2:
         resolution:
@@ -1932,7 +1984,6 @@ packages:
                 integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==,
             }
         engines: { node: ">=6" }
-        dev: true
 
     /escape-string-regexp@1.0.5:
         resolution:
@@ -2199,7 +2250,6 @@ packages:
                 integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==,
             }
         engines: { node: 6.* || 8.* || >= 10.* }
-        dev: true
 
     /get-func-name@2.0.0:
         resolution:
@@ -2614,7 +2664,6 @@ packages:
                 integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==,
             }
         engines: { node: ">=8" }
-        dev: true
 
     /is-fullwidth-code-point@4.0.0:
         resolution:
@@ -3958,7 +4007,6 @@ packages:
                 integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==,
             }
         engines: { node: ">=0.10.0" }
-        dev: true
 
     /require-from-string@2.0.2:
         resolution:
@@ -4395,7 +4443,6 @@ packages:
             emoji-regex: 8.0.0
             is-fullwidth-code-point: 3.0.0
             strip-ansi: 6.0.1
-        dev: true
 
     /string-width@5.1.2:
         resolution:
@@ -4439,7 +4486,6 @@ packages:
         engines: { node: ">=8" }
         dependencies:
             ansi-regex: 5.0.1
-        dev: true
 
     /strip-ansi@7.0.1:
         resolution:
@@ -5209,7 +5255,6 @@ packages:
             ansi-styles: 4.3.0
             string-width: 4.2.3
             strip-ansi: 6.0.1
-        dev: true
 
     /wrap-ansi@8.1.0:
         resolution:
@@ -5243,7 +5288,6 @@ packages:
                 integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==,
             }
         engines: { node: ">=10" }
-        dev: true
 
     /yallist@2.1.2:
         resolution:
@@ -5284,7 +5328,6 @@ packages:
                 integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==,
             }
         engines: { node: ">=12" }
-        dev: true
 
     /yargs@15.4.1:
         resolution:
@@ -5321,6 +5364,22 @@ packages:
             y18n: 5.0.8
             yargs-parser: 21.1.1
         dev: true
+
+    /yargs@17.7.2:
+        resolution:
+            {
+                integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==,
+            }
+        engines: { node: ">=12" }
+        dependencies:
+            cliui: 8.0.1
+            escalade: 3.1.1
+            get-caller-file: 2.0.5
+            require-directory: 2.1.1
+            string-width: 4.2.3
+            y18n: 5.0.8
+            yargs-parser: 21.1.1
+        dev: false
 
     /yocto-queue@0.1.0:
         resolution:
