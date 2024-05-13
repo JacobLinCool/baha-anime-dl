@@ -1,5 +1,14 @@
 # baha-anime-dl
 
+## 0.0.5
+
+### Patch Changes
+
+-   [`1f1eb2b`](https://github.com/JacobLinCool/baha-anime-dl/commit/1f1eb2bf01379a2703b869c78add48967927a22e) Thanks [@JacobLinCool](https://github.com/JacobLinCool)! - Use @fetch-impl
+
+-   Updated dependencies [[`1f1eb2b`](https://github.com/JacobLinCool/baha-anime-dl/commit/1f1eb2bf01379a2703b869c78add48967927a22e)]:
+    -   baha-anime-dl@0.0.5
+
 ## 0.0.4
 
 ### Patch Changes
