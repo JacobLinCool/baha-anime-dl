@@ -1,5 +1,13 @@
 # baha-anime-dl-cli
 
+## 0.0.2
+
+### Patch Changes
+
+-   Updated dependencies [[`e66fe98`](https://github.com/JacobLinCool/baha-anime-dl/commit/e66fe98790a518655ab9f99e1265f6607a645f46)]:
+    -   baha-anime-dl@0.0.6
+    -   baha-anime-dl-ext@0.0.6
+
 ## 0.0.1
 
 ### Patch Changes
