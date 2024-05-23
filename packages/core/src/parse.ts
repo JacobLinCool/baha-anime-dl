@@ -15,7 +15,7 @@ export function parse(playlist: string): {
 		key: {
 			method: "AES-128";
 			uri: string;
-			iv: Uint32Array;
+			iv?: Uint32Array;
 		};
 		timeline: 0;
 	}[];

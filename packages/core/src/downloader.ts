@@ -132,7 +132,7 @@ export class Downloader {
 		const key = await this.fetch(key_url).then((res) => res.arrayBuffer());
 		this.log("key", key);
 
-		const iv = new Uint32Array(segments[0].key.iv);
+		const iv = new Uint32Array(segments[0].key.iv ?? [0, 0, 0, 0]);
 		this.log("iv", iv);
 
 		for (const segment of segments) {
@@ -141,8 +141,12 @@ export class Downloader {
 			const filename = url.split("/").pop();
 			const content = (async () => {
 				const buffer = await this.fetch(url).then((res) => res.arrayBuffer());
-				const decrypted = await this.decrypt(buffer, key, iv);
-				return decrypted;
+				if (iv) {
+					const decrypted = await this.decrypt(buffer, key, iv);
+					return decrypted;
+				} else {
+					return buffer;
+				}
 			})();
 
 			if (!filename) {
