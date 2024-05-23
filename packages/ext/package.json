@@ -17,7 +17,7 @@
 	"dependencies": {
 		"cross-fetch": "^4.0.0",
 		"debug": "^4.3.4",
-		"fetch-cookie": "^2.1.0",
+		"fetch-cookie": "^3.0.0",
 		"fluent-ffmpeg": "^2.1.2",
 		"tough-cookie": "^4.1.3"
 	},
