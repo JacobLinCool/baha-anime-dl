@@ -1,5 +1,11 @@
 # baha-anime-dl
 
+## 0.0.6
+
+### Patch Changes
+
+-   [`e66fe98`](https://github.com/JacobLinCool/baha-anime-dl/commit/e66fe98790a518655ab9f99e1265f6607a645f46) Thanks [@JacobLinCool](https://github.com/JacobLinCool)! - Default AES-128 decryption IV to 0
+
 ## 0.0.5
 
 ### Patch Changes
