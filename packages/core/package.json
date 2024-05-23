@@ -20,7 +20,7 @@
 		"@types/debug": "^4.1.9",
 		"@types/tough-cookie": "^4.0.3",
 		"debug": "^4.3.4",
-		"fetch-cookie": "^2.1.0",
+		"fetch-cookie": "^3.0.0",
 		"m3u8-parser": "^7.1.0",
 		"tough-cookie": "^4.1.3"
 	},
