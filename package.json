@@ -23,7 +23,7 @@
 		"tsx": "^3.13.0",
 		"typedoc": "^0.25.1",
 		"typescript": "^5.2.2",
-		"vitest": "^0.34.5"
+		"vitest": "^3.0.0"
 	},
 	"lint-staged": {
 		"*.{ts,js,json,yaml,yml}": [
