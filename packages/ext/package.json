@@ -5,6 +5,7 @@
 	"author": "JacobLinCool <jacoblincool@gmail.com> (https://jacoblin.cool)",
 	"license": "AGPL-3.0",
 	"keywords": [],
+	"type": "module",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"files": [
@@ -15,23 +16,23 @@
 		"build:docs": "typedoc --out docs src"
 	},
 	"dependencies": {
-		"cross-fetch": "^4.0.0",
-		"debug": "^4.3.4",
-		"fetch-cookie": "^2.1.0",
-		"fluent-ffmpeg": "^2.1.2",
-		"tough-cookie": "^4.1.3"
+		"cross-fetch": "^4.1.0",
+		"debug": "^4.4.0",
+		"fetch-cookie": "^3.1.0",
+		"fluent-ffmpeg": "^2.1.3",
+		"tough-cookie": "^5.1.2"
 	},
 	"peerDependencies": {
 		"baha-anime-dl": "workspace:*"
 	},
 	"devDependencies": {
-		"@types/debug": "^4.1.9",
-		"@types/fluent-ffmpeg": "^2.1.22",
-		"@types/tough-cookie": "^4.0.3",
+		"@types/debug": "^4.1.12",
+		"@types/fluent-ffmpeg": "^2.1.27",
+		"@types/tough-cookie": "^4.0.5",
 		"baha-anime-dl": "workspace:*",
-		"tsup": "^7.2.0",
-		"typedoc": "^0.25.1",
-		"typescript": "^5.2.2"
+		"tsup": "^8.4.0",
+		"typedoc": "^0.28.2",
+		"typescript": "^5.8.3"
 	},
 	"repository": {
 		"type": "git",

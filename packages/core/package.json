@@ -5,6 +5,7 @@
 	"author": "JacobLinCool <jacoblincool@gmail.com> (https://jacoblin.cool)",
 	"license": "AGPL-3.0",
 	"keywords": [],
+	"type": "module",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"files": [
@@ -17,17 +18,18 @@
 	"dependencies": {
 		"@fetch-impl/cross-fetch": "^1.0.0",
 		"@fetch-impl/fetcher": "^1.0.0",
-		"@types/debug": "^4.1.9",
-		"@types/tough-cookie": "^4.0.3",
-		"debug": "^4.3.4",
-		"fetch-cookie": "^2.1.0",
-		"m3u8-parser": "^7.1.0",
-		"tough-cookie": "^4.1.3"
+		"@types/debug": "^4.1.12",
+		"@types/tough-cookie": "^4.0.5",
+		"debug": "^4.4.0",
+		"fetch-cookie": "^3.1.0",
+		"m3u8-parser": "^7.2.0",
+		"p-limit": "^6.2.0",
+		"tough-cookie": "^5.1.2"
 	},
 	"devDependencies": {
-		"tsup": "^7.2.0",
-		"typedoc": "^0.25.1",
-		"typescript": "^5.2.2"
+		"tsup": "^8.4.0",
+		"typedoc": "^0.28.2",
+		"typescript": "^5.8.3"
 	},
 	"repository": {
 		"type": "git",

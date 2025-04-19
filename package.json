@@ -3,6 +3,7 @@
 	"name": "baha-anime-dl-monorepo",
 	"author": "JacobLinCool <jacoblincool@gmail.com> (https://jacoblin.cool)",
 	"license": "AGPL-3.0",
+	"type": "module",
 	"scripts": {
 		"prepare": "husky install",
 		"format": "prettier --write --ignore-path .gitignore '**/*.{ts,json,yaml,yml}'",
@@ -11,19 +12,19 @@
 		"build:docs": "typedoc --out docs"
 	},
 	"devDependencies": {
-		"@changesets/changelog-github": "^0.4.8",
-		"@changesets/cli": "^2.26.2",
-		"@types/node": "^20.6.5",
-		"husky": "^8.0.3",
-		"lint-staged": "^14.0.1",
-		"prettier": "^3.0.3",
-		"prettier-plugin-organize-imports": "^3.2.3",
-		"serve": "^14.2.1",
-		"tsup": "^7.2.0",
-		"tsx": "^3.13.0",
-		"typedoc": "^0.25.1",
-		"typescript": "^5.2.2",
-		"vitest": "^0.34.5"
+		"@changesets/changelog-github": "^0.5.1",
+		"@changesets/cli": "^2.29.2",
+		"@types/node": "^22.14.1",
+		"husky": "^9.1.7",
+		"lint-staged": "^15.5.1",
+		"prettier": "^3.5.3",
+		"prettier-plugin-organize-imports": "^4.1.0",
+		"serve": "^14.2.4",
+		"tsup": "^8.4.0",
+		"tsx": "^4.19.3",
+		"typedoc": "^0.28.2",
+		"typescript": "^5.8.3",
+		"vitest": "^3.1.1"
 	},
 	"lint-staged": {
 		"*.{ts,js,json,yaml,yml}": [
@@ -38,5 +39,5 @@
 		"url": "https://github.com/JacobLinCool/baha-anime-dl/issues"
 	},
 	"homepage": "https://jacoblincool.github.io/baha-anime-dl",
-	"packageManager": "pnpm@9.1.2"
+	"packageManager": "pnpm@10.8.1"
 }

@@ -1,4 +1,7 @@
 import type { fetch } from "@fetch-impl/fetcher";
+import fs from "node:fs/promises";
+import path from "node:path";
+import pLimit from "p-limit";
 import { version } from "../package.json";
 import type { DownloaderConfig } from "./config";
 import { default_config } from "./config";
@@ -108,7 +111,17 @@ export class Downloader {
 		const meta = await this.get_playlist(sn);
 		meta_resolver(meta[1]);
 		const parsed = parse(meta[1]);
-		const url = new URL(parsed.playlists[0].uri, meta[0]).toString();
+		const resolutions = ["1080p", "720p", "540p", "360p"];
+		let idx = parsed.playlists.length - 1;
+		for (const res of resolutions) {
+			const found = parsed.playlists.findIndex((p) => p.uri.includes(res));
+			if (found !== -1) {
+				idx = found;
+				break;
+			}
+		}
+		this.log("selected playlist source", parsed.playlists[idx]);
+		const url = new URL(parsed.playlists[idx].uri, meta[0]).toString();
 
 		const res = await this.fetch(url);
 		const playlist = await res.text();
@@ -135,23 +148,49 @@ export class Downloader {
 		const iv = new Uint32Array(segments[0].key.iv ?? [0, 0, 0, 0]);
 		this.log("iv", iv);
 
+		const limit = pLimit(this.config.concurrency);
+
 		for (const segment of segments) {
 			const url = new URL(segment.uri, base).toString();
-
 			const filename = url.split("/").pop();
-			const content = (async () => {
-				const buffer = await this.fetch(url).then((res) => res.arrayBuffer());
-				if (iv) {
-					const decrypted = await this.decrypt(buffer, key, iv);
-					return decrypted;
-				} else {
-					return buffer;
-				}
-			})();
 
 			if (!filename) {
 				throw new Error(`Cannot get filename of ${JSON.stringify(segment)}`);
 			}
+
+			// Check if file exists in continue directory
+			let existingContent: ArrayBuffer | null = null;
+			if (this.config.continueDir) {
+				try {
+					const filePath = path.join(this.config.continueDir, filename);
+					const fileExists = await fs
+						.access(filePath)
+						.then(() => true)
+						.catch(() => false);
+
+					if (fileExists) {
+						this.log(
+							`File ${filename} exists in continue directory, skipping download`,
+						);
+						const fileBuffer = await fs.readFile(filePath);
+						existingContent = new Uint8Array(fileBuffer).buffer;
+					}
+				} catch (err) {
+					this.log(`Error checking continue file ${filename}:`, err);
+				}
+			}
+
+			const content = existingContent
+				? Promise.resolve(existingContent)
+				: limit(async () => {
+						const buffer = await this.fetch(url).then((res) => res.arrayBuffer());
+						if (iv) {
+							const decrypted = await this.decrypt(buffer, key, iv);
+							return decrypted;
+						} else {
+							return buffer;
+						}
+					});
 
 			results.push({ filename, content });
 		}
@@ -181,7 +220,7 @@ export class Downloader {
 
 	protected async get_device(): Promise<void> {
 		const res = await this.fetch("https://ani.gamer.com.tw/ajax/getdeviceid.php?id=");
-		const json = await res.json();
+		const json = (await res.json()) as { deviceid: string };
 		this.log("getdeviceid", json);
 
 		this.ctx.device = json.deviceid;
@@ -191,7 +230,7 @@ export class Downloader {
 		const res = await this.fetch(
 			`https://ani.gamer.com.tw/ajax/token.php?adID=${undefined}&sn=${sn}&device=${this.ctx.device}`,
 		);
-		const token: Token | ErrorToken = await res.json();
+		const token = (await res.json()) as Token | ErrorToken;
 		this.log("token", token);
 
 		if ("error" in token) {
@@ -205,7 +244,7 @@ export class Downloader {
 		const res = await this.fetch(
 			`https://ani.gamer.com.tw/ajax/m3u8.php?sn=${sn}&device=${this.ctx.device}`,
 		);
-		const json = await res.json();
+		const json = (await res.json()) as { src: string };
 		this.log("playlist json", json);
 
 		const text = await this.fetch(json.src).then((res) => res.text());

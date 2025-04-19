@@ -29,6 +29,12 @@ export interface DownloaderConfig {
 	 * The webcrypto.SubtleCrypto implementation to use for decrypting segments.
 	 */
 	subtle: webcrypto.SubtleCrypto;
+
+	/**
+	 * Directory to continue downloading from.
+	 * If provided and files exist, will skip downloading those segments.
+	 */
+	continueDir: string | null;
 }
 
 export const default_config = () =>
@@ -38,4 +44,5 @@ export const default_config = () =>
 		concurrency: 6,
 		retries: 3,
 		subtle: subtle,
+		continueDir: null,
 	}) satisfies DownloaderConfig;
