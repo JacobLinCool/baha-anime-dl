@@ -39,5 +39,5 @@
 		"url": "https://github.com/JacobLinCool/baha-anime-dl/issues"
 	},
 	"homepage": "https://jacoblincool.github.io/baha-anime-dl",
-	"packageManager": "pnpm@10.8.1"
+	"packageManager": "pnpm@10.10.0"
 }
